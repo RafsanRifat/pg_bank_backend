@@ -15,6 +15,9 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class TransactionSerializer(serializers.ModelSerializer):
+    currency = serializers.SlugRelatedField(slug_field='code',
+                                            queryset=Currency.objects.all())  # Transaction has a Foreignkey with currency. when we submit a get request we just can see the id of currency. In this way we willl be able to see the code field of currency
+
     class Meta:
         model = Transaction
         fields = (
