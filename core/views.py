@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from rest_framework import generics
 from rest_framework.viewsets import ModelViewSet
+from rest_framework import filters
 
 from .models import Currency, Category, Transaction
 from .serializers import CurrencyListSerializer, CategorySerializer, WriteTransactionSerializer, \
@@ -20,7 +21,10 @@ class CategoryViewSet(ModelViewSet):
 
 
 class TransactionViewSet(ModelViewSet):
-    queryset = Transaction.objects.all()
+    queryset = Transaction.objects.select_related('currency', 'category')
+    # queryset = Transaction.objects.all()
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['amount', 'description', 'category__name']
 
     def get_serializer_class(self):
         if self.action in ("list", "retrive"):
