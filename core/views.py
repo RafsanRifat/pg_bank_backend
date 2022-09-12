@@ -23,7 +23,8 @@ class CategoryViewSet(ModelViewSet):
 class TransactionViewSet(ModelViewSet):
     queryset = Transaction.objects.select_related('currency', 'category')
     # queryset = Transaction.objects.all()
-    filter_backends = [filters.SearchFilter]
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    ordering_fields = ['amount', 'date']
     search_fields = ['amount', 'description', 'category__name']
 
     def get_serializer_class(self):
