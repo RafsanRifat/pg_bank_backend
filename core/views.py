@@ -3,7 +3,8 @@ from rest_framework import generics
 from rest_framework.viewsets import ModelViewSet
 
 from .models import Currency, Category, Transaction
-from .serializers import CurrencyListSerializer, CategorySerializer, TransactionSerializer
+from .serializers import CurrencyListSerializer, CategorySerializer, WriteTransactionSerializer, \
+    ReadTransactionSerializer
 
 
 # Create your views here.
@@ -19,5 +20,9 @@ class CategoryViewSet(ModelViewSet):
 
 
 class TransactionViewSet(ModelViewSet):
-    serializer_class = TransactionSerializer
     queryset = Transaction.objects.all()
+
+    def get_serializer_class(self):
+        if self.action in ("list", "retrive"):
+            return ReadTransactionSerializer
+        return WriteTransactionSerializer
