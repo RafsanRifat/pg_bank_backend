@@ -1,3 +1,5 @@
+from django.contrib.auth.models import User
+
 from .models import Transaction, Currency, Category
 from rest_framework import serializers
 
@@ -12,6 +14,12 @@ class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = ("id", "name")
+
+
+class ReadUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ("id", "username")
 
 
 class WriteTransactionSerializer(serializers.ModelSerializer):
@@ -33,6 +41,7 @@ class WriteTransactionSerializer(serializers.ModelSerializer):
 class ReadTransactionSerializer(serializers.ModelSerializer):
     currency = CurrencyListSerializer()
     category = CategorySerializer()
+    user = ReadUserSerializer()
 
     class Meta:
         model = Transaction
@@ -43,4 +52,5 @@ class ReadTransactionSerializer(serializers.ModelSerializer):
             "date",
             "description",
             "category",
+            'user'
         )

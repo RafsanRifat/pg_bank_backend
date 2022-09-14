@@ -23,13 +23,18 @@ class CategoryViewSet(ModelViewSet):
 
 class TransactionViewSet(ModelViewSet):
     permission_classes = [IsAuthenticated]
-    queryset = Transaction.objects.select_related('currency', 'category')
     # queryset = Transaction.objects.all()
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     ordering_fields = ['amount', 'date']
     search_fields = ['amount', 'description', 'category__name']
 
+    def get_queryset(self):
+        return Transaction.objects.select_related('currency', 'category', 'user').filter(user=self.request.user)
+
     def get_serializer_class(self):
         if self.action in ("list", "retrive"):
             return ReadTransactionSerializer
         return WriteTransactionSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
