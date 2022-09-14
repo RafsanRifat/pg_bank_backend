@@ -2,6 +2,7 @@ from django.shortcuts import render
 from rest_framework import generics
 from rest_framework.viewsets import ModelViewSet
 from rest_framework import filters
+from rest_framework.permissions import IsAuthenticated
 
 from .models import Currency, Category, Transaction
 from .serializers import CurrencyListSerializer, CategorySerializer, WriteTransactionSerializer, \
@@ -21,6 +22,7 @@ class CategoryViewSet(ModelViewSet):
 
 
 class TransactionViewSet(ModelViewSet):
+    permission_classes = [IsAuthenticated]
     queryset = Transaction.objects.select_related('currency', 'category')
     # queryset = Transaction.objects.all()
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
