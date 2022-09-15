@@ -23,13 +23,17 @@ class ReadUserSerializer(serializers.ModelSerializer):
 
 
 class WriteTransactionSerializer(serializers.ModelSerializer):
-    currency = serializers.SlugRelatedField(slug_field='code',
-                                            queryset=Currency.objects.all())  # Transaction has a Foreignkey with currency. when we submit a get request we just can see the id of currency. In this way we willl be able to see the code field of currency
-    category = serializers.SlugRelatedField(slug_field='name', queryset=Category.objects.all())
+    # currency = serializers.SlugRelatedField(slug_field='code',
+    #                                         queryset=Currency.objects.all())  # Transaction has a Foreignkey with currency. when we submit a get request we just can see the id of currency. In this way we willl be able to see the code field of currency
+    # category = serializers.SlugRelatedField(slug_field='name', queryset=Category.objects.all())
+
+    # user = serializers.HiddenField(
+    #     default=serializers.CurrentUserDefault())  # user set korar jonno viewset a amra j perform_create method likhechi, seita na likhe ekhan theke evabeo serializer set kore dewa jabe
 
     class Meta:
         model = Transaction
         fields = (
+            # "user",   serializer theke user set kore dite chaile eikhane user field define korte hobe
             "amount",
             "currency",
             "date",
