@@ -29,6 +29,7 @@ class WriteTransactionSerializer(serializers.ModelSerializer):
 
     # user = serializers.HiddenField(
     #     default=serializers.CurrentUserDefault())  # user set korar jonno viewset a amra j perform_create method likhechi, seita na likhe ekhan theke evabeo serializer set kore dewa jabe
+    #     default=serializers.CurrentUserDefault())  # user set korar jonno viewset a amra j perform_create method likhechi, seita na likhe ekhan theke evabeo serializer set kore dewa jabe
 
     class Meta:
         model = Transaction
