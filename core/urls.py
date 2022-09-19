@@ -13,4 +13,5 @@ urlpatterns = [
     path('rest-auth/', include('rest_framework.urls')),
     path('login/', views.obtain_auth_token),
     path('currencies/', CurrencyListAPIView.as_view(), name="currencies")
+    # path('currencies/', CurrencyListAPIView.as_view(), name="currencies")
 ]
