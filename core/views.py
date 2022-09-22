@@ -29,7 +29,6 @@ class CategoryViewSet(ModelViewSet):
 class TransactionViewSet(ModelViewSet):
     permission_classes = [IsAuthenticated]
     # queryset = Transaction.objects.all()
-    # queryset = Transaction.objects.all()
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     ordering_fields = ['amount', 'date']
     search_fields = ['amount', 'description', 'category__name']
